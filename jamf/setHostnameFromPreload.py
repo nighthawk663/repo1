@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/env python
 
 # Pulls the provisioned computer name from inventory preload "barcode2" field and sets the computer name
 # If "barcode2" is null, will set the computer name to "assetTag" If both null, will fail.
@@ -16,7 +16,7 @@
 
 
 ### Jamf Server to use:
-jamfRoot = "<myCorp>.jamfcloud.com"
+JAMF_ROOT = "<myCorp>.jamfcloud.com"
 
 import json
 import os
@@ -26,7 +26,7 @@ import urllib2
 # Get the b64encoded api user & password from the 4th argument
 b64userAndPass = sys.argv[4]
 
-getInventoryPreloadURL = "https://" + jamfRoot + "/uapi/inventory-preload?page=0&pagesize=100&sort=ASC&sortBy=id"
+getInventoryPreloadURL = "https://" + JAMF_ROOT + "/uapi/inventory-preload?page=0&pagesize=100&sort=ASC&sortBy=id"
 
 def getAuthHeader ( b64userAndPass ):
   '''
@@ -35,7 +35,7 @@ def getAuthHeader ( b64userAndPass ):
   Returns the full header needed for the main API query
   DO NOT USE AN ADMIN ACCOUNT FOR THIS.
   '''
-  tokensUrl = "https://" + jamfRoot + "/uapi/auth/tokens"
+  tokensUrl = "https://" + JAMF_ROOT + "/uapi/auth/tokens"
   basicHeaders = { 'Authorization' : 'Basic %s' % b64userAndPass }
 
   req = urllib2.Request( tokensUrl, "", basicHeaders )  ## Need to push a blank "data" to make it POST
