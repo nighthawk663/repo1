@@ -21,16 +21,16 @@ class jiraTable:
             'type' : 'tableRow',
             'content' : []
         }
-        for cellText in args:
+        for cellContents in args:
+            if not isinstance(cellContents, dict):
+                cellContents = { 'type' : 'text', 'text' : str(cellContents) }
+
             row['content'].append({
                 'type': 'tableCell',
                 'attrs': {},
                 'content' : [{
                     'type': 'paragraph',
-                    'content' : [{
-                        'type': 'text',
-                        'text': str(cellText)
-                    }]
+                    'content' : [ cellContents ]
                 }]
             })
         self.table['content'].append(row)
@@ -50,7 +50,7 @@ class jiraTable:
                     'content' : [{
                         'type': 'text',
                         'marks' : [{ 'type' : 'strong' }],
-                        'text': cellText
+                        'text': str(cellText)
                     }]
                 }]
             })
